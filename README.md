@@ -1,4 +1,4 @@
-# Group lab
+# Final Project
 
 Steps for resolving lab:
 - Create a team of 4 or 5 students. Teams should be composed of studens from the same group (no mixed groups please);
