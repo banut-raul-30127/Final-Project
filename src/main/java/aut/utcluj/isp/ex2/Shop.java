@@ -20,6 +20,7 @@ public class Shop {
         return name;
     }
 
+    
     public String getCity() {
         return city;
     }
