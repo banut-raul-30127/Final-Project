@@ -5,9 +5,10 @@ import java.util.Objects;
 /**
  * @author stefan
  */
+
 public class Shop {
-    private String name;
-    private String city;
+    private final String name;
+    private final String city;
 
     public Shop(String name, String city) {
         this.name = name;
