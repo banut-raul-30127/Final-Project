@@ -11,6 +11,7 @@ import org.junit.runners.Suite;
 /**
  * @author stefan
  */
+
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
         aut.utcluj.isp.ex1.ShopTest.class,
