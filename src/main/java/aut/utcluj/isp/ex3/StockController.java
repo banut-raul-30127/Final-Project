@@ -81,12 +81,12 @@ public class StockController {
      * @return true if at least one product was updated or false instead
      */
     public boolean updateProductPriceByProductId(final String productId, final Double price) {
-        if (catalogue.containsKey(productId)) {
-            for (Product product : catalogue.get(productId)) {
-                product.setPrice(price);
-                return true;
-            }
+        if (!catalogue.containsKey(productId)) {
+            return false;
         }
-        return false;
+        for (Product product : catalogue.get(productId)) {
+            product.setPrice(price);
+        }
+        return true;
     }
 }
