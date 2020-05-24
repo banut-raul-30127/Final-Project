@@ -37,4 +37,9 @@ public class Product {
     public Double getPrice() {
         return price;
     }
+
+    @Override
+    public String toString() {
+        return "id : " + id + " name : " + name + " price : " + price;
+    }
 }

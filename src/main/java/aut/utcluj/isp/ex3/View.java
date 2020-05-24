@@ -1,14 +1,16 @@
 package aut.utcluj.isp.ex3;
 
 import javax.swing.*;
-import java.awt.*;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
+import java.util.Map;
 
 public class View extends JFrame {
-     JButton buttonAdd, buttonRemove, buttonSearch, buttonEdit, buttonAll, buttonNumber;
-     JFrame frame;
-     JPanel panel;
+    JButton buttonAdd, buttonRemove, buttonSearch, buttonEdit, buttonAll, buttonNumber;
+    JFrame frame;
+    JPanel panel;
     StockController ctrl = new StockController();
 
     public View() {
@@ -196,7 +198,7 @@ public class View extends JFrame {
                 JButton okButton = new JButton("OK ");
                 JTextField idText = new JTextField();
                 JTextArea result = new JTextArea();
-                result.setBounds(10, 150, 360,200);
+                result.setBounds(10, 150, 360, 200);
                 idLabel.setBounds(10, 60, 100, 20);
                 idText.setBounds(120, 60, 200, 20);
                 okButton.setBounds(170, 100, 100, 20);
@@ -210,7 +212,7 @@ public class View extends JFrame {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         System.out.println("Search");
-                         ctrl.getProductsWithSameId(idText.getText()) ;
+                        ctrl.getProductsWithSameId(idText.getText());
 
                         //newFrame.dispose();
                     }
@@ -224,9 +226,11 @@ public class View extends JFrame {
                 JFrame newFrame = new JFrame("All products");
                 JPanel secondPanel = new JPanel();
                 newFrame.setVisible(true);
-                JLabel newLabel = new JLabel("The products: " + ctrl.getCatalogue());
+                Map<String, List<Product>> map = ctrl.getCatalogue();
+                JLabel newLabel = new JLabel("The products: ");
+
                 JButton okButton = new JButton("OK ");
-                okButton.setBounds(70, 100, 100, 20);
+
 
                 newFrame.setContentPane(secondPanel);
                 newFrame.setSize(400, 400);
@@ -234,6 +238,18 @@ public class View extends JFrame {
 
                 newLabel.setBounds(10, 60, 350, 20);
                 secondPanel.add(newLabel);
+
+                int pozX = 10, pozY = 80;
+                for (List<Product> products : map.values()) {
+                    for (Product product : products) {
+                        JLabel newLabelOne = new JLabel(product.toString());
+                        pozY += 20;
+                        newLabelOne.setBounds(pozX, pozY, 350, 20);
+                        secondPanel.add(newLabelOne);
+                    }
+                }
+
+                okButton.setBounds(150, 30, 100, 20);
                 secondPanel.add(okButton);
 
                 okButton.addActionListener(new ActionListener() {
