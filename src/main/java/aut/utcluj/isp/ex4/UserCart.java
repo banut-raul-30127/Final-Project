@@ -1,20 +1,26 @@
 package aut.utcluj.isp.ex4;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author stefan
  */
-public class UserCart {
+public class UserCart implements ICartDetails {
     private List<Product> cardProducts;
     private double totalPrice;
 
+    public UserCart() {
+        this.cardProducts = new ArrayList<>();
+        totalPrice = 0;
+    }
+
     public double getTotalPrice() {
-        return totalPrice;
+        return this.totalPrice;
     }
 
     public List<Product> getCardProducts() {
-        return cardProducts;
+        return this.cardProducts;
     }
 
     /**
@@ -24,7 +30,10 @@ public class UserCart {
      * @param quantity - number of products of the same type to be added
      */
     public void addProductToCart(final Product product, int quantity) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        for (char i = 0; i < quantity; i++) {
+            this.cardProducts.add(product);
+        }
+        this.totalPrice += quantity * product.getPrice();
     }
 
     /**
@@ -33,8 +42,14 @@ public class UserCart {
      *
      * @param productId - unique product id
      */
-    public void removeProductFromCart(final String productId) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void removeProductFromCart(final String productId) throws ProductNotFoundException {
+        Product product = new Product(productId, 0.0);
+        if (!this.cardProducts.contains(product)) throw new ProductNotFoundException();
+        else {
+            product = this.cardProducts.get(this.cardProducts.indexOf(product));
+            this.totalPrice -= product.getPrice();
+            this.cardProducts.remove(product);
+        }
     }
 
     /**
@@ -42,6 +57,31 @@ public class UserCart {
      * Reset products and total price to default values
      */
     public void resetCart() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        this.cardProducts.clear();
+        totalPrice = 0;
+    }
+
+    @Override
+    public String getCartDetails() {
+        List<Product> distinctProducts = new ArrayList<>();
+        for (Product product : this.cardProducts) {
+            if (!distinctProducts.contains(product)) distinctProducts.add(product);
+        }
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Product distinctProduct : distinctProducts) {
+            int quantity = 0;
+            for (Product product : cardProducts) {
+                if (distinctProduct.equals(product)) quantity++;
+            }
+            stringBuilder.append("Product id: ");
+            stringBuilder.append(distinctProduct.getProductId());
+            stringBuilder.append(", Items: ");
+            stringBuilder.append(quantity);
+            stringBuilder.append("\n");
+            quantity = 0;
+        }
+        stringBuilder.append("Total price: ");
+        stringBuilder.append(totalPrice);
+        return stringBuilder.toString();
     }
 }
